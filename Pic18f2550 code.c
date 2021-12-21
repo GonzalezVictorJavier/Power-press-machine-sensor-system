@@ -2,6 +2,7 @@
 #device adc=10
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #FUSES NOWDT                    //No Watch Dog Timer
 #FUSES HS                       //Crystal osc >= 4mhz for PCM/PCH , 3mhz to 10 mhz for PCD
 #FUSES NOPROTECT                //Code not protected from reading
@@ -20,10 +21,10 @@
 #FUSES MCLR                     //Master Clear pin enabled
 //#FUSES VREGEN                   //USB voltage regulator enabled
 
-#use delay(clock=20000000)
+#use delay(clock=20000000)                                                      //Clock 20MHz
 
 //------------------------------------------------------------------------------
-#define LCD_E    PIN_B4
+#define LCD_E    PIN_B4                                                         //Seteo de pines para el LCD
 #define LCD_RW   PIN_B3
 #define LCD_RS   PIN_B2
 #define LCD_DB4  PIN_B5
@@ -33,32 +34,37 @@
 #include "LCD_FLEXY.c"
 //#USE STANDARD_IO(B)
 
-#bit out = 0xF82.7
-#bit autoset = 0xF81.0
+#bit out = 0xF82.7                                                              //Pin que controla encendido apagado de la prensa
+#bit autoset = 0xF81.0                                                          
 #bit reset = 0xF81.1
 #bit preset = 0xF82.0
 #bit piezo = 0xF80.0
 #bit descarga_clamp = 0xF80.1
 
-#define adcconst 10.24
-#define valor_filtro 102.4
+#define adcconst 10.24f                                                         //Constante de conversion desde conversor (10 bits) a float
+#define valor_filtro 20.48f                                                     //Filtro inferior para ruido
+#define errorSuperiorMayor 1.03f
+#define errorInferiorMayor 0.97f
+#define errorSuperiorMenor 1.05f
+#define errorInferiorMenor 0.95f
 
-int1 flagAutoset = 0;
-float ref_sup = 99;
+int1 flagAutoset = 0;                                                           //Flag para autoset
+float ref_sup = 99;                                         
 float ref_inf = 0;
-float promedio;
-float lectura;
-char texto_lcd[24];
+float promedio;                                                                 //Promedio de 3 golpes utilizado como patron apra los proximos.
+double lectura;                                                                  //Lectura de los golpes
+int1 flagMedicion = 1;
+char texto_lcd[24];                                                             //String para el LCD
 //------------------------------------------------------------------------------
-void print_lcd(char * );
-float lectura_adc(void );
-void write_float_eeprom(long int , float ); 
-float read_float_eeprom(long int ); 
-void autoset(void );
+void print_lcd(char * );                                                        //Funcion que imprime en LCD
+double lectura_adc(void );                                                       //Funcion que devuelve el valor en porcentaje (float) de la medicion ADC
+void write_float_eeprom(long int , float );                                     //Funcion que escribe en la memoria
+float read_float_eeprom(long int );                                             //Funcionq ue lee en la memoria
+void autoset(void );                                                            //Seteo automatico de rangos (toma 3 golpes y fija los valores )
 //------------------------------------------------------------------------------
-#INT_EXT
-void int_ext_0()
-{
+#INT_EXT 
+void int_ext_0()                                                                //Interrupcion para el boton de AUTOSET
+{  
    flagAutoset = 1;
    autoset();   
    output_b(input_b());
@@ -68,7 +74,7 @@ void int_ext_0()
 }
 //------------------------------------------------------------------------------
 #INT_EXT1
-void int_ext_1()
+void int_ext_1()                                                                //Interrupcion para boton de RESET
 {
    if(reset == 0)
    {
@@ -81,8 +87,8 @@ void int_ext_1()
 //------------------------------------------------------------------------------
 void main(void)
 {
-   descarga_clamp = 0;
-   output_b(0b11111111);
+   descarga_clamp = 0;  
+   output_b(0b11111111);                                                        //Puerto B en 1
    set_tris_a(0b00000001);
    set_tris_b(0b00000011);
    set_tris_c(0b00000001);
@@ -101,42 +107,38 @@ void main(void)
    setup_timer_0(RTCC_INTERNAL);
    enable_interrupts(global);
    out = 0;
-   lcd_init();                                     
-   set_adc_channel(0);
+   lcd_init();                                                                  //Inciciali<zacion de LCD                  
+   set_adc_channel(0);                    
    lcd_gotoxy(1,1);  
-   lcd_putc("HOLA");                                         
+   lcd_putc("HOLA");                                                            //Mensaje de inicio con el siguiente delay.                                          
    delay_ms(2000);
-   promedio = read_float_eeprom(sizeof(float) * 0);                                           
-   ref_sup = read_float_eeprom(sizeof(float) * 1);
-   ref_inf = read_float_eeprom(sizeof(float) * 2);
+   promedio = read_float_eeprom(sizeof(float) * 0);                             //Levanta el promedio de la memoria.              
+   ref_sup = read_float_eeprom(sizeof(float) * 1);                              //Levanta la referencia superior de la memoria. 
+   ref_inf = read_float_eeprom(sizeof(float) * 2);                              //Levanta la referencia inferior de la memoria.
    lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Promedio:   \n%.2f", promedio);
+   sprintf(texto_lcd, "Promedio:   \n%3.3g", promedio);                          //Muestra el promedio con el siguiente delay.
    print_lcd(texto_lcd);
    lcd_putc("  ");                                         
    delay_ms(2000);
-   lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Refsup:   \n%.2f", ref_sup);
-   print_lcd(texto_lcd);
-   lcd_putc("          ");                                         
-   delay_ms(2000);
-   lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Refinf:   \n%.2f", ref_inf);
-   print_lcd(texto_lcd);
-   lcd_putc("          ");                                         
-   delay_ms(2000);
    do
    {
-      lectura = lectura_adc();
+      lectura = lectura_adc();                                                  //Lee del ADC y lo manda a Lectura.
       lcd_gotoxy(1,1);  
-      sprintf(texto_lcd, "Medicion:   \n%.2f", lectura);
+      sprintf(texto_lcd, "             /n                ", );                        //Muestra la medicion con el siguiente delay.
+      print_lcd(texto_lcd);
+      lcd_putc("  ");
+      delay_ms(500);
+      lcd_gotoxy(1,1);
+      sprintf(texto_lcd, "Medicion:   \n%3.3g", lectura);                        //Muestra la medicion con el siguiente delay.
       print_lcd(texto_lcd);
       lcd_putc("  ");                                         
-      if(lectura > ref_sup || lectura < ref_inf )
+/*      if(lectura > ref_sup || lectura < ref_inf )                               //Compara la lectura con las referencias superior e inferior.
       {
-         out = 1;
+         out = 1;                                                               //Si esta guera de rango, apaga la maquina.    
+         flagMedicion = 0;
       }
-      lectura = 0;
-   }while(TRUE);
+*/      lectura = 0;                                                              //No se para q esta esto.
+   }while(flagMedicion);                                                        //Esto nos saca del loop de medicion, en el caso que se apague la maquina. 
 }
 //------------------------------------------------------------------------------
 void print_lcd(char * c)
@@ -149,26 +151,35 @@ void print_lcd(char * c)
    }
 }
 //------------------------------------------------------------------------------
-float lectura_adc()
+double lectura_adc()
 {
-   float lectura = 0;
+   double agregado = 0;
+   double lectura = 0;
    if(flagAutoset == 0)
    {
-      enable_interrupts(INT_EXT);                                                  //Porque parece q el compilador las deshabilita
+      enable_interrupts(INT_EXT);                                               //Porque parece q el compilador las deshabilita
       enable_interrupts(INT_EXT1);
       enable_interrupts(global);
    }
    do
    {
-   }while((float)read_adc() <= valor_filtro);                              
+/*
+      agregado += 0.01;
+      if(agregado > 0.09)
+      {
+         agregado = 0;
+      }
+*/      
+   }while(((float)read_adc() / 10.32f) <= 0);                              
    delay_ms(100);
-   lectura = read_adc();
-   delay_ms(1);                                                                //Este es para matar los piquitos de despues de la medicion
+//   lectura = ((double) read_adc() ) / ((double) 10.24);
+   lectura = (double) read_adc() / 10.23f;
+//   lectura += agregado;
+   delay_ms(1);                                                                 //Este es para matar los piquitos de despues de la medicion
    descarga_clamp = 1;
-   delay_ms(100);                                                              //Para darle tiempo a q descargue el capa    descarga_clamp = 0;
+   delay_ms(100);                                                               //Para darle tiempo a q descargue el capa    descarga_clamp = 0;
    descarga_clamp = 0;
    delay_ms(50);
-   (float)lectura = ((float)lectura /(float)adcconst);
    return lectura;
 }
 //------------------------------------------------------------------------------
@@ -200,7 +211,7 @@ void autoset()
    lectura = lectura_adc();
    promedio = promedio + lectura;
    lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Medicion:   \n%.2f", lectura);
+   sprintf(texto_lcd, "Medicion:   \n%2.2g", lectura);
    print_lcd(texto_lcd);
    lcd_putc("          ");                                         
    lectura = 0;
@@ -212,7 +223,7 @@ void autoset()
    lectura = lectura_adc();
    promedio = promedio + lectura;
    lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Medicion:   \n%.2f", lectura);
+   sprintf(texto_lcd, "Medicion:   \n%2.2g", lectura);
    print_lcd(texto_lcd);
    lcd_putc("          ");                                                
    lectura = 0;
@@ -224,40 +235,33 @@ void autoset()
    lectura = lectura_adc();
    promedio = promedio + lectura;
    lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Medicion:   \n%.2f", lectura);
+   sprintf(texto_lcd, "Medicion:   \n%2.2g", lectura);
    print_lcd(texto_lcd);
    lcd_putc("          ");                                         
    lectura = 0;
    delay_ms(2000);
-   promedio = (float)promedio / (float)3;
+
+   promedio = promedio / 3.0f;
+
    if(preset == 0)
    {
-      ref_sup = ((float)promedio * (float)0.98);
-      ref_inf = ((float)promedio * (float)1.02);
+      ref_sup = promedio * errorSuperiorMayor;
+      ref_inf = promedio * errorInferiorMayor;
    }
    else
    {
-      ref_sup = ((float)promedio * (float)0.98);
-      ref_inf = ((float)promedio * (float)1.02);         
+      ref_sup = promedio * errorSuperiorMenor;
+      ref_inf = promedio * errorInferiorMenor;         
    }
    write_float_eeprom(sizeof(float) * 0 ,promedio );
    write_float_eeprom(sizeof(float) * 1 ,ref_sup );
    write_float_eeprom(sizeof(float) * 2 ,ref_inf );
+   
    lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Promedio:   \n%.2f", promedio);
+   sprintf(texto_lcd, "Promedio:   \n%2.2g", promedio);
    print_lcd(texto_lcd);
    lcd_putc("          ");                                         
-   delay_ms(1000);
-   lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Refsup:   \n%.2f", ref_sup);
-   print_lcd(texto_lcd);
-   lcd_putc("          ");                                         
-   delay_ms(1000);
-   lcd_gotoxy(1,1);  
-   sprintf(texto_lcd, "Refinf:   \n%.2f", ref_inf);
-   print_lcd(texto_lcd);
-   lcd_putc("          ");                                         
-   delay_ms(1000);
+   delay_ms(2000);
    flagAutoset = 0;   
 }
 

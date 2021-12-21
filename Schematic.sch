@@ -16773,6 +16773,11 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
 <part name="GND20" library="supply1" deviceset="GND" device=""/>
 <part name="C5" library="rcl" deviceset="C-US" device="050-024X044" value="100 nf"/>
+<part name="R8" library="resistor" deviceset="R-US_" device="0207/10" value="10k"/>
+<part name="R10" library="resistor" deviceset="R-US_" device="0207/10" value="10k"/>
+<part name="R13" library="resistor" deviceset="R-US_" device="0207/10" value="10k"/>
+<part name="R14" library="resistor" deviceset="R-US_" device="0207/10" value="10k"/>
+<part name="GND1" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -16796,12 +16801,12 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <instance part="T1" gate="G$1" x="106.68" y="111.76" rot="MR270"/>
 <instance part="R15" gate="G$1" x="88.9" y="116.84" rot="R90"/>
 <instance part="D5" gate="1" x="83.82" y="116.84" rot="R90"/>
-<instance part="X3" gate="-1" x="-66.04" y="109.22"/>
-<instance part="X3" gate="-2" x="-66.04" y="104.14"/>
-<instance part="R16" gate="G$1" x="-48.26" y="96.52" rot="MR180"/>
+<instance part="X3" gate="-1" x="-71.12" y="116.84"/>
+<instance part="X3" gate="-2" x="-71.12" y="111.76"/>
+<instance part="R16" gate="G$1" x="-53.34" y="104.14" rot="MR180"/>
 <instance part="R20" gate="G$1" x="111.76" y="119.38"/>
 <instance part="R22" gate="G$1" x="96.52" y="109.22" rot="R180"/>
-<instance part="R19" gate="G$1" x="12.7" y="104.14" rot="R180"/>
+<instance part="R19" gate="G$1" x="7.62" y="104.14" rot="R180"/>
 <instance part="X2" gate="-1" x="50.8" y="172.72"/>
 <instance part="X2" gate="-2" x="50.8" y="167.64"/>
 <instance part="X2" gate="-3" x="50.8" y="162.56"/>
@@ -16832,7 +16837,7 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <attribute name="VALUE" x="195.58" y="149.86" size="1.778" layer="96"/>
 </instance>
 <instance part="GND6" gate="1" x="154.94" y="132.08"/>
-<instance part="GND7" gate="1" x="-60.96" y="86.36"/>
+<instance part="GND7" gate="1" x="-66.04" y="93.98"/>
 <instance part="GND8" gate="1" x="27.94" y="45.72"/>
 <instance part="GND9" gate="1" x="33.02" y="53.34"/>
 <instance part="GND10" gate="1" x="33.02" y="60.96"/>
@@ -16845,25 +16850,24 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <instance part="P+1" gate="1" x="208.28" y="180.34"/>
 <instance part="P+3" gate="1" x="154.94" y="144.78"/>
 <instance part="P+4" gate="1" x="152.4" y="55.88"/>
-<instance part="P+5" gate="1" x="-7.62" y="83.82"/>
+<instance part="P+5" gate="1" x="-20.32" y="86.36"/>
 <instance part="P+6" gate="1" x="152.4" y="127"/>
 <instance part="P+7" gate="1" x="187.96" y="180.34"/>
 <instance part="P+8" gate="1" x="-22.86" y="165.1"/>
 <instance part="P-2" gate="1" x="-22.86" y="139.7"/>
-<instance part="P+9" gate="1" x="-7.62" y="119.38"/>
-<instance part="P-3" gate="1" x="-7.62" y="88.9"/>
+<instance part="P+9" gate="1" x="-15.24" y="119.38"/>
+<instance part="P-3" gate="1" x="-15.24" y="88.9"/>
 <instance part="P+10" gate="1" x="210.82" y="124.46"/>
 <instance part="P+11" gate="1" x="88.9" y="134.62"/>
 <instance part="GND17" gate="1" x="177.8" y="91.44"/>
 <instance part="GND18" gate="1" x="177.8" y="121.92" rot="R180"/>
 <instance part="P+12" gate="1" x="210.82" y="88.9" rot="R180"/>
-<instance part="IC6" gate="B" x="-7.62" y="104.14"/>
-<instance part="C4" gate="G$1" x="-53.34" y="104.14" rot="R270"/>
+<instance part="C4" gate="G$1" x="-58.42" y="111.76" rot="R270"/>
 <instance part="C6" gate="G$1" x="208.28" y="165.1"/>
 <instance part="C7" gate="G$1" x="187.96" y="165.1"/>
-<instance part="IC6" gate="P" x="-7.62" y="104.14"/>
+<instance part="IC6" gate="P" x="-15.24" y="104.14"/>
 <instance part="C8" gate="G$1" x="-10.16" y="139.7"/>
-<instance part="C9" gate="G$1" x="-2.54" y="114.3" rot="R90"/>
+<instance part="C9" gate="G$1" x="-10.16" y="114.3" rot="R90"/>
 <instance part="P+13" gate="1" x="-10.16" y="147.32"/>
 <instance part="P-4" gate="1" x="-10.16" y="129.54"/>
 <instance part="SJ1" gate="1" x="157.48" y="50.8"/>
@@ -16884,8 +16888,13 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <instance part="P+15" gate="1" x="144.78" y="182.88"/>
 <instance part="GND19" gate="1" x="147.32" y="160.02"/>
 <instance part="GND20" gate="1" x="60.96" y="165.1"/>
-<instance part="IC6" gate="A" x="-30.48" y="106.68"/>
+<instance part="IC6" gate="A" x="-15.24" y="104.14" rot="MR180"/>
 <instance part="C5" gate="G$1" x="-17.78" y="162.56" rot="R90"/>
+<instance part="R8" gate="G$1" x="-15.24" y="124.46" rot="R180"/>
+<instance part="R10" gate="G$1" x="-35.56" y="106.68" rot="R180"/>
+<instance part="R13" gate="G$1" x="-35.56" y="101.6" rot="R180"/>
+<instance part="R14" gate="G$1" x="-27.94" y="93.98" rot="R90"/>
+<instance part="GND1" gate="1" x="-27.94" y="83.82"/>
 </instances>
 <busses>
 </busses>
@@ -16958,14 +16967,19 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </net>
 <net name="N$51" class="0">
 <segment>
-<wire x1="-60.96" y1="109.22" x2="-48.26" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="-48.26" y1="109.22" x2="-48.26" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="116.84" x2="-53.34" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="116.84" x2="-53.34" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="X3" gate="-1" pin="KL"/>
 <pinref part="R16" gate="G$1" pin="E"/>
 <pinref part="C4" gate="G$1" pin="1"/>
-<wire x1="-48.26" y1="104.14" x2="-48.26" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="-50.8" y1="104.14" x2="-48.26" y2="104.14" width="0.1524" layer="91"/>
-<junction x="-48.26" y="104.14"/>
+<wire x1="-53.34" y1="111.76" x2="-53.34" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="-55.88" y1="111.76" x2="-53.34" y2="111.76" width="0.1524" layer="91"/>
+<junction x="-53.34" y="111.76"/>
+<pinref part="R10" gate="G$1" pin="2"/>
+<wire x1="-40.64" y1="106.68" x2="-43.18" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="-43.18" y1="106.68" x2="-43.18" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="-43.18" y1="116.84" x2="-53.34" y2="116.84" width="0.1524" layer="91"/>
+<junction x="-53.34" y="116.84"/>
 </segment>
 </net>
 <net name="N$24" class="0">
@@ -17047,9 +17061,9 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </net>
 <net name="N$3" class="0">
 <segment>
-<wire x1="17.78" y1="104.14" x2="20.32" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="104.14" x2="20.32" y2="127" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="127" x2="-66.04" y2="127" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="104.14" x2="15.24" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="104.14" x2="15.24" y2="127" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="127" x2="-66.04" y2="127" width="0.1524" layer="91"/>
 <wire x1="-66.04" y1="127" x2="-66.04" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="-66.04" y1="154.94" x2="-63.5" y2="154.94" width="0.1524" layer="91"/>
 <pinref part="D6" gate="G$1" pin="C"/>
@@ -17273,16 +17287,26 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="-48.26" y1="91.44" x2="-48.26" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="-60.96" y1="104.14" x2="-60.96" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="-60.96" y1="88.9" x2="-48.26" y2="88.9" width="0.1524" layer="91"/>
-<junction x="-60.96" y="88.9"/>
+<wire x1="-53.34" y1="99.06" x2="-53.34" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="111.76" x2="-66.04" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="96.52" x2="-53.34" y2="96.52" width="0.1524" layer="91"/>
+<junction x="-66.04" y="96.52"/>
 <pinref part="R16" gate="G$1" pin="A"/>
 <pinref part="X3" gate="-2" pin="KL"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 <pinref part="C4" gate="G$1" pin="2"/>
-<wire x1="-58.42" y1="104.14" x2="-60.96" y2="104.14" width="0.1524" layer="91"/>
-<junction x="-60.96" y="104.14"/>
+<wire x1="-63.5" y1="111.76" x2="-66.04" y2="111.76" width="0.1524" layer="91"/>
+<junction x="-66.04" y="111.76"/>
+<pinref part="R16" gate="G$1" pin="S"/>
+<wire x1="-48.26" y1="104.14" x2="-45.72" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="-45.72" y1="104.14" x2="-45.72" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="-45.72" y1="96.52" x2="-53.34" y2="96.52" width="0.1524" layer="91"/>
+<junction x="-53.34" y="96.52"/>
+<pinref part="R13" gate="G$1" pin="2"/>
+<wire x1="-40.64" y1="101.6" x2="-43.18" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="-43.18" y1="101.6" x2="-43.18" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="-43.18" y1="96.52" x2="-45.72" y2="96.52" width="0.1524" layer="91"/>
+<junction x="-45.72" y="96.52"/>
 </segment>
 <segment>
 <wire x1="20.32" y1="81.28" x2="27.94" y2="81.28" width="0.1524" layer="91"/>
@@ -17380,6 +17404,11 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <pinref part="GND20" gate="1" pin="GND"/>
 <wire x1="55.88" y1="167.64" x2="60.96" y2="167.64" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="GND1" gate="1" pin="GND"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<wire x1="-27.94" y1="88.9" x2="-27.94" y2="86.36" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="N$39" class="0">
 <segment>
@@ -17429,7 +17458,7 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 <pinref part="P+5" gate="1" pin="+5V"/>
 <pinref part="R3" gate="G$1" pin="1"/>
 <wire x1="-17.78" y1="78.74" x2="-20.32" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="-20.32" y1="78.74" x2="-7.62" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="78.74" x2="-20.32" y2="83.82" width="0.1524" layer="91"/>
 <junction x="-20.32" y="78.74"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="-17.78" y1="68.58" x2="-20.32" y2="68.58" width="0.1524" layer="91"/>
@@ -17474,14 +17503,14 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </segment>
 <segment>
 <pinref part="P-3" gate="1" pin="-12V"/>
-<wire x1="-7.62" y1="96.52" x2="-7.62" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="96.52" x2="-15.24" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="IC6" gate="P" pin="V-"/>
 <pinref part="C9" gate="G$1" pin="2"/>
-<wire x1="-7.62" y1="93.98" x2="-7.62" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="2.54" y1="114.3" x2="5.08" y2="114.3" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="114.3" x2="5.08" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="93.98" x2="-7.62" y2="93.98" width="0.1524" layer="91"/>
-<junction x="-7.62" y="93.98"/>
+<wire x1="-15.24" y1="93.98" x2="-15.24" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="114.3" x2="-2.54" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="114.3" x2="-2.54" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="93.98" x2="-15.24" y2="93.98" width="0.1524" layer="91"/>
+<junction x="-15.24" y="93.98"/>
 </segment>
 <segment>
 <pinref part="C8" gate="G$1" pin="2"/>
@@ -17542,12 +17571,12 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </segment>
 <segment>
 <pinref part="P+9" gate="1" pin="+12V"/>
-<wire x1="-7.62" y1="116.84" x2="-7.62" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="116.84" x2="-15.24" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="IC6" gate="P" pin="V+"/>
 <pinref part="C9" gate="G$1" pin="1"/>
-<wire x1="-7.62" y1="114.3" x2="-7.62" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="114.3" x2="-5.08" y2="114.3" width="0.1524" layer="91"/>
-<junction x="-7.62" y="114.3"/>
+<wire x1="-15.24" y1="114.3" x2="-15.24" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="114.3" x2="-12.7" y2="114.3" width="0.1524" layer="91"/>
+<junction x="-15.24" y="114.3"/>
 </segment>
 <segment>
 <pinref part="P+13" gate="1" pin="+12V"/>
@@ -17571,16 +17600,14 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </net>
 <net name="N$21" class="0">
 <segment>
-<wire x1="2.54" y1="86.36" x2="2.54" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="IC6" gate="B" pin="OUT"/>
-<wire x1="2.54" y1="104.14" x2="0" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="IC6" gate="B" pin="-IN"/>
-<wire x1="-15.24" y1="101.6" x2="-17.78" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="-17.78" y1="101.6" x2="-17.78" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="-17.78" y1="86.36" x2="2.54" y2="86.36" width="0.1524" layer="91"/>
-<junction x="2.54" y="104.14"/>
 <pinref part="R19" gate="G$1" pin="2"/>
-<wire x1="2.54" y1="104.14" x2="7.62" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="IC6" gate="A" pin="OUT"/>
+<wire x1="-7.62" y1="104.14" x2="0" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="0" y1="104.14" x2="2.54" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="-10.16" y1="124.46" x2="0" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="0" y1="124.46" x2="0" y2="104.14" width="0.1524" layer="91"/>
+<junction x="0" y="104.14"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -17657,24 +17684,25 @@ General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="IC6" gate="A" pin="-IN"/>
-<wire x1="-38.1" y1="104.14" x2="-40.64" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="-40.64" y1="104.14" x2="-40.64" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-40.64" y1="96.52" x2="-20.32" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-20.32" y1="96.52" x2="-20.32" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="IC6" gate="A" pin="OUT"/>
-<wire x1="-20.32" y1="106.68" x2="-22.86" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="IC6" gate="B" pin="+IN"/>
-<wire x1="-20.32" y1="106.68" x2="-15.24" y2="106.68" width="0.1524" layer="91"/>
-<junction x="-20.32" y="106.68"/>
+<pinref part="IC6" gate="A" pin="+IN"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<wire x1="-30.48" y1="101.6" x2="-27.94" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="R14" gate="G$1" pin="2"/>
+<wire x1="-27.94" y1="101.6" x2="-22.86" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="-27.94" y1="99.06" x2="-27.94" y2="101.6" width="0.1524" layer="91"/>
+<junction x="-27.94" y="101.6"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
-<pinref part="R16" gate="G$1" pin="S"/>
-<wire x1="-43.18" y1="96.52" x2="-43.18" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="IC6" gate="A" pin="+IN"/>
-<wire x1="-43.18" y1="109.22" x2="-38.1" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="IC6" gate="A" pin="-IN"/>
+<pinref part="R10" gate="G$1" pin="1"/>
+<wire x1="-30.48" y1="106.68" x2="-27.94" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<wire x1="-27.94" y1="106.68" x2="-22.86" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="124.46" x2="-27.94" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="-27.94" y1="124.46" x2="-27.94" y2="106.68" width="0.1524" layer="91"/>
+<junction x="-27.94" y="106.68"/>
 </segment>
 </net>
 </nets>

@@ -41,15 +41,14 @@
 #bit descarga_clamp = 0xF80.1
 
 #define adcconst 10.24
-#define valor_filtro 0
-#define tama
+#define valor_filtro 102.4
 
 int1 flagAutoset = 0;
-   float ref_sup = 99;
-   float ref_inf = 0;
-   float promedio;
-   float lectura;
-   char texto_lcd[24];
+float ref_sup = 99;
+float ref_inf = 0;
+float promedio;
+float lectura;
+char texto_lcd[24];
 //------------------------------------------------------------------------------
 void print_lcd(char * );
 float lectura_adc(void );
@@ -60,10 +59,12 @@ void autoset(void );
 #INT_EXT
 void int_ext_0()
 {
+   flagAutoset = 1;
    autoset();   
    output_b(input_b());
    clear_interrupt(INT_EXT);
    output_high(PIN_B0);
+   flagAutoset = 0;
 }
 //------------------------------------------------------------------------------
 #INT_EXT1
@@ -113,6 +114,16 @@ void main(void)
    print_lcd(texto_lcd);
    lcd_putc("  ");                                         
    delay_ms(2000);
+   lcd_gotoxy(1,1);  
+   sprintf(texto_lcd, "Refsup:   \n%.2f", ref_sup);
+   print_lcd(texto_lcd);
+   lcd_putc("          ");                                         
+   delay_ms(2000);
+   lcd_gotoxy(1,1);  
+   sprintf(texto_lcd, "Refinf:   \n%.2f", ref_inf);
+   print_lcd(texto_lcd);
+   lcd_putc("          ");                                         
+   delay_ms(2000);
    do
    {
       lectura = lectura_adc();
@@ -141,14 +152,21 @@ void print_lcd(char * c)
 float lectura_adc()
 {
    float lectura = 0;
+   if(flagAutoset == 0)
+   {
+      enable_interrupts(INT_EXT);                                                  //Porque parece q el compilador las deshabilita
+      enable_interrupts(INT_EXT1);
+      enable_interrupts(global);
+   }
    do
    {
-   }while((float)read_adc() <= lectura);                              
+   }while((float)read_adc() <= valor_filtro);                              
    delay_ms(100);
    lectura = read_adc();
    delay_ms(1);                                                                //Este es para matar los piquitos de despues de la medicion
    descarga_clamp = 1;
    delay_ms(100);                                                              //Para darle tiempo a q descargue el capa    descarga_clamp = 0;
+   descarga_clamp = 0;
    delay_ms(50);
    (float)lectura = ((float)lectura /(float)adcconst);
    return lectura;
@@ -214,13 +232,13 @@ void autoset()
    promedio = (float)promedio / (float)3;
    if(preset == 0)
    {
-      ref_sup = (float)promedio * (float)1.05;
-      ref_inf = (float)promedio * (float)0.95;
+      ref_sup = ((float)promedio * (float)0.98);
+      ref_inf = ((float)promedio * (float)1.02);
    }
    else
    {
-      ref_sup = (float)promedio * (float)1.03;
-      ref_inf = (float)promedio * (float)0.97;         
+      ref_sup = ((float)promedio * (float)0.98);
+      ref_inf = ((float)promedio * (float)1.02);         
    }
    write_float_eeprom(sizeof(float) * 0 ,promedio );
    write_float_eeprom(sizeof(float) * 1 ,ref_sup );
@@ -229,7 +247,17 @@ void autoset()
    sprintf(texto_lcd, "Promedio:   \n%.2f", promedio);
    print_lcd(texto_lcd);
    lcd_putc("          ");                                         
-   delay_ms(2000);
+   delay_ms(1000);
+   lcd_gotoxy(1,1);  
+   sprintf(texto_lcd, "Refsup:   \n%.2f", ref_sup);
+   print_lcd(texto_lcd);
+   lcd_putc("          ");                                         
+   delay_ms(1000);
+   lcd_gotoxy(1,1);  
+   sprintf(texto_lcd, "Refinf:   \n%.2f", ref_inf);
+   print_lcd(texto_lcd);
+   lcd_putc("          ");                                         
+   delay_ms(1000);
    flagAutoset = 0;   
 }
 
